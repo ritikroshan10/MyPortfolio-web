@@ -68,7 +68,7 @@ const About = () => {
         {/* Education Section */}
         <div>
           <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-10 flex justify-center items-center gap-3">
-            🎓 My <span className="text-[#1ED1BF]">Education</span> Background
+            🎓 My Education Background
           </h2>
 
           <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
