@@ -6,38 +6,52 @@ import { SiTailwindcss, SiMongodb, SiExpress } from 'react-icons/si';
 
 const Home = () => {
   const [profileImage, setProfileImage] = useState("");
+  const [content, setContent] = useState({
+    intro: "",
+    deepWork: "",
+    summary: ""
+  });
 
   useEffect(() => {
-    const fetchProfileImage = async () => {
+    const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/profileimg");
-        if (res.data?.profileImage) {
-          setProfileImage(`http://localhost:5000/uploads/${res.data.profileImage}`);
+        // Get image
+        const imgRes = await axios.get("http://localhost:5000/api/profileimg");
+        if (imgRes.data?.profileImage) {
+          setProfileImage(`http://localhost:5000/uploads/${imgRes.data.profileImage}`);
         }
-      } catch (error) {
-        console.error("Error fetching profile image:", error);
+
+        // Get dynamic paragraphs
+        const textRes = await axios.get("http://localhost:5000/api/homecontent");
+        setContent({
+          intro: textRes.data?.line1 || "",
+          deepWork: textRes.data?.line2 || "",
+          summary: textRes.data?.line3 || ""
+        });
+
+      } catch (err) {
+        console.error("Error loading content:", err);
       }
     };
 
-    fetchProfileImage();
+    fetchData();
   }, []);
 
   return (
     <section className="px-4 py-10">
       {/* =================image+about ================= */}
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 items-center gap-10">
-
         <div className="text-center md:text-left space-y-6">
           <h1 className="text-4xl sm:text-5xl font-bold leading-tight text-gray-800 dark:text-white">
             Hi, I'm <span className="text-[#1ED1BF]">Ritik Roshan Singh</span>
           </h1>
 
           <p className="text-gray-600 dark:text-gray-300 text-lg">
-            A React Frontend Developer focused on building clean and user-friendly interfaces.
+            {content.intro}
           </p>
 
           <p className="text-gray-600 dark:text-gray-300 text-base">
-            I always dig deep when working on something — I research beyond just the first answer and try to improve things through better understanding.
+            {content.deepWork}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-start justify-center items-center">
@@ -66,7 +80,6 @@ const Home = () => {
             className="w-72 h-72 object-cover rounded-full border-4 border-[#1ED1BF] shadow-lg hover:scale-105 transition duration-300 ease-in-out"
           />
         </div>
-
       </div>
 
       {/*============ What I Do=========== */}
@@ -75,7 +88,7 @@ const Home = () => {
           What I Do
         </h2>
         <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed max-w-3xl mx-auto">
-          I build responsive UIs using React and focus on clean design, performance, and reusability. I also have basic backend knowledge, including working with Express and MongoDB, and know how to connect frontend apps to REST APIs.
+          {content.summary}
         </p>
       </div>
 
