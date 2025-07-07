@@ -93,7 +93,7 @@ const About = () => {
         {/* Skills Section */}
         <div>
           <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-8">🛠 Skills</h2>
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 text-center text-5xl">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-7 text-center text-5xl">
             {skills.map((skill) => {
               const Icon = allIcons[skill.icon];
               return (
